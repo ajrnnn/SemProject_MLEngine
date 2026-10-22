@@ -1,0 +1,387 @@
+{
+  "precision_at_k": 0.333,
+  "recall_at_k": 1.0,
+  "mean_reciprocal_rank": 1.0,
+  "false_positives": [
+    {
+      "lost_report_id": "lost-001",
+      "found_report_id": "found-002",
+      "score": 38.88,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-001",
+      "found_report_id": "found-003",
+      "score": 12.92,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-002",
+      "found_report_id": "found-005",
+      "score": 27.83,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-002",
+      "found_report_id": "found-006",
+      "score": 8.88,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-003",
+      "found_report_id": "found-009",
+      "score": 49.86,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-003",
+      "found_report_id": "found-008",
+      "score": 32.69,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-004",
+      "found_report_id": "found-011",
+      "score": 32.05,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-004",
+      "found_report_id": "found-012",
+      "score": 31.67,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-005",
+      "found_report_id": "found-014",
+      "score": 15.02,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-006",
+      "found_report_id": "found-016",
+      "score": 46.36,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-007",
+      "found_report_id": "found-018",
+      "score": 42.0,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-008",
+      "found_report_id": "found-020",
+      "score": 44.83,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-009",
+      "found_report_id": "found-022",
+      "score": 43.75,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-010",
+      "found_report_id": "found-024",
+      "score": 62.5,
+      "label": "plausible"
+    },
+    {
+      "lost_report_id": "lost-011",
+      "found_report_id": "found-026",
+      "score": 51.67,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-012",
+      "found_report_id": "found-028",
+      "score": 52.5,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-013",
+      "found_report_id": "found-030",
+      "score": 45.56,
+      "label": "non_match"
+    },
+    {
+      "lost_report_id": "lost-014",
+      "found_report_id": "found-032",
+      "score": 48.18,
+      "label": "non_match"
+    }
+  ],
+  "unlabelled_candidates": [
+    {
+      "lost_report_id": "lost-005",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-006",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-007",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-008",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-009",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-010",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-011",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-012",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-013",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    },
+    {
+      "lost_report_id": "lost-014",
+      "found_report_id": "found-001",
+      "score": 0.0,
+      "label": "unlabelled"
+    }
+  ],
+  "evaluated_lost_reports": 14,
+  "metric_caveat": "Unlabelled pairs are unknown; precision_at_k assumes only intended 'match' labels are positive.",
+  "synthetic_corrections": {
+    "source_rows": 46,
+    "output_rows": 46,
+    "repaired_ids": [
+      "lost-006",
+      "found-015",
+      "found-016",
+      "lost-010",
+      "found-023",
+      "found-024"
+    ]
+  },
+  "split": {
+    "seed": 42,
+    "strategy": "Shuffle lost IDs; keep every labelled found candidate with its lost ID",
+    "results": {
+      "development": {
+        "precision_at_k": 0.333,
+        "recall_at_k": 1.0,
+        "mean_reciprocal_rank": 1.0,
+        "false_positives": [
+          {
+            "lost_report_id": "lost-001",
+            "found_report_id": "found-002",
+            "score": 38.88,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-001",
+            "found_report_id": "found-003",
+            "score": 12.92,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-002",
+            "found_report_id": "found-005",
+            "score": 27.83,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-002",
+            "found_report_id": "found-006",
+            "score": 8.88,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-003",
+            "found_report_id": "found-009",
+            "score": 49.86,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-003",
+            "found_report_id": "found-008",
+            "score": 32.69,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-004",
+            "found_report_id": "found-011",
+            "score": 32.05,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-004",
+            "found_report_id": "found-012",
+            "score": 31.67,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-005",
+            "found_report_id": "found-014",
+            "score": 15.02,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-006",
+            "found_report_id": "found-016",
+            "score": 46.36,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-010",
+            "found_report_id": "found-024",
+            "score": 62.5,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-011",
+            "found_report_id": "found-026",
+            "score": 51.67,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-012",
+            "found_report_id": "found-028",
+            "score": 52.5,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-014",
+            "found_report_id": "found-032",
+            "score": 48.18,
+            "label": "non_match"
+          }
+        ],
+        "unlabelled_candidates": [
+          {
+            "lost_report_id": "lost-005",
+            "found_report_id": "found-001",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-006",
+            "found_report_id": "found-001",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-010",
+            "found_report_id": "found-001",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-011",
+            "found_report_id": "found-001",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-012",
+            "found_report_id": "found-001",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-014",
+            "found_report_id": "found-001",
+            "score": 0.0,
+            "label": "unlabelled"
+          }
+        ],
+        "evaluated_lost_reports": 10,
+        "metric_caveat": "Unlabelled pairs are unknown; precision_at_k assumes only intended 'match' labels are positive."
+      },
+      "test": {
+        "precision_at_k": 0.333,
+        "recall_at_k": 1.0,
+        "mean_reciprocal_rank": 1.0,
+        "false_positives": [
+          {
+            "lost_report_id": "lost-007",
+            "found_report_id": "found-018",
+            "score": 42.0,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-008",
+            "found_report_id": "found-020",
+            "score": 44.83,
+            "label": "plausible"
+          },
+          {
+            "lost_report_id": "lost-009",
+            "found_report_id": "found-022",
+            "score": 43.75,
+            "label": "non_match"
+          },
+          {
+            "lost_report_id": "lost-013",
+            "found_report_id": "found-030",
+            "score": 45.56,
+            "label": "non_match"
+          }
+        ],
+        "unlabelled_candidates": [
+          {
+            "lost_report_id": "lost-007",
+            "found_report_id": "found-019",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-008",
+            "found_report_id": "found-017",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-009",
+            "found_report_id": "found-017",
+            "score": 0.0,
+            "label": "unlabelled"
+          },
+          {
+            "lost_report_id": "lost-013",
+            "found_report_id": "found-017",
+            "score": 0.0,
+            "label": "unlabelled"
+          }
+        ],
+        "evaluated_lost_reports": 4,
+        "metric_caveat": "Unlabelled pairs are unknown; precision_at_k assumes only intended 'match' labels are positive."
+      }
+    }
+  }
+}

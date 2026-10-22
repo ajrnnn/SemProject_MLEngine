@@ -1,0 +1,3 @@
+# Optional dataset inspection; not needed for the CAT 2 classifier.
+Pillow>=10.0
+# Add a tested PyTorch/Transformers combination when implementing CLIP encoding.

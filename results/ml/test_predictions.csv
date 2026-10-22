@@ -1,0 +1,9 @@
+lost_report_id,found_report_id,original_label,target,match_probability,predicted_class
+lost-007,found-017,match,1,0.986894268356351,1
+lost-007,found-018,plausible,0,0.4168295684830497,0
+lost-008,found-019,match,1,0.9110902887963324,1
+lost-008,found-020,plausible,0,0.39302120063037627,0
+lost-009,found-021,match,1,0.4453902752373403,0
+lost-009,found-022,non_match,0,0.10952792835343857,0
+lost-013,found-029,match,1,0.9984190940965737,1
+lost-013,found-030,non_match,0,0.1813672139584499,0

@@ -1,0 +1,80 @@
+{
+  "scope": "Top three among all 32 found reports per synthetic lost report, with no score threshold",
+  "labelled_distractor_counts": {
+    "plausible": 8,
+    "non_match": 10
+  },
+  "unlabelled_candidate_count": 10,
+  "highest_scoring_labelled_distractors": [
+    {
+      "lost_report_id": "lost-010",
+      "found_report_id": "found-024",
+      "score": 62.5,
+      "label": "plausible",
+      "label_note": "Same clothing type and colour but no logo and size conflict."
+    },
+    {
+      "lost_report_id": "lost-012",
+      "found_report_id": "found-028",
+      "score": 52.5,
+      "label": "non_match",
+      "label_note": "Heart engraving matches but ring colour conflicts."
+    },
+    {
+      "lost_report_id": "lost-011",
+      "found_report_id": "found-026",
+      "score": 51.67,
+      "label": "non_match",
+      "label_note": "Brand and category match but model conflicts."
+    },
+    {
+      "lost_report_id": "lost-003",
+      "found_report_id": "found-009",
+      "score": 49.86,
+      "label": "plausible",
+      "label_note": "Apple phone and colour match, but case colour differs and crack detail is missing."
+    },
+    {
+      "lost_report_id": "lost-014",
+      "found_report_id": "found-032",
+      "score": 48.18,
+      "label": "non_match",
+      "label_note": "Book colour and location match, but subject conflicts."
+    },
+    {
+      "lost_report_id": "lost-006",
+      "found_report_id": "found-016",
+      "score": 46.36,
+      "label": "plausible",
+      "label_note": "Same category, colour, location, and time, but size and wooden handle conflict with small compact umbrella."
+    },
+    {
+      "lost_report_id": "lost-013",
+      "found_report_id": "found-030",
+      "score": 45.56,
+      "label": "non_match",
+      "label_note": "Connector and location match but brand and colour conflict."
+    },
+    {
+      "lost_report_id": "lost-008",
+      "found_report_id": "found-020",
+      "score": 44.83,
+      "label": "plausible",
+      "label_note": "Same colour, category, and location but lacks economics and coffee-stain details."
+    },
+    {
+      "lost_report_id": "lost-009",
+      "found_report_id": "found-022",
+      "score": 43.75,
+      "label": "non_match",
+      "label_note": "Keys match but lanyard colour conflicts."
+    },
+    {
+      "lost_report_id": "lost-007",
+      "found_report_id": "found-018",
+      "score": 42.0,
+      "label": "plausible",
+      "label_note": "Generic white earbuds case; missing the strongest distinctive evidence."
+    }
+  ]
+}

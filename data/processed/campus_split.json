@@ -1,0 +1,66 @@
+{
+  "seed": 42,
+  "strategy": "Shuffle lost IDs; keep every labelled found candidate with its lost ID",
+  "splits": {
+    "development": {
+      "lost_ids": [
+        "lost-001",
+        "lost-002",
+        "lost-003",
+        "lost-004",
+        "lost-005",
+        "lost-006",
+        "lost-010",
+        "lost-011",
+        "lost-012",
+        "lost-014"
+      ],
+      "found_ids": [
+        "found-001",
+        "found-002",
+        "found-003",
+        "found-004",
+        "found-005",
+        "found-006",
+        "found-007",
+        "found-008",
+        "found-009",
+        "found-010",
+        "found-011",
+        "found-012",
+        "found-013",
+        "found-014",
+        "found-015",
+        "found-016",
+        "found-023",
+        "found-024",
+        "found-025",
+        "found-026",
+        "found-027",
+        "found-028",
+        "found-031",
+        "found-032"
+      ],
+      "pair_count": 24
+    },
+    "test": {
+      "lost_ids": [
+        "lost-007",
+        "lost-008",
+        "lost-009",
+        "lost-013"
+      ],
+      "found_ids": [
+        "found-017",
+        "found-018",
+        "found-019",
+        "found-020",
+        "found-021",
+        "found-022",
+        "found-029",
+        "found-030"
+      ],
+      "pair_count": 8
+    }
+  }
+}

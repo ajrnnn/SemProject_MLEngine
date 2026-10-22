@@ -1,0 +1,15 @@
+feature,standardized_coefficient
+distinctive_feature_similarity,0.8043087896453078
+colour_match,0.7539033613402241
+description_similarity,0.6808274129691644
+model_match,0.46015140917903274
+brand_match,0.1770384897597563
+category_match,0.0
+category_conflict,0.0
+material_match,-0.07780668384366103
+brand_conflict,-0.40851287160889044
+location_similarity,-0.4442920632371924
+model_conflict,-0.4483575222993111
+material_conflict,-0.5524294443851613
+colour_conflict,-0.7539033613402241
+time_difference_hours,-0.9126322045750518
