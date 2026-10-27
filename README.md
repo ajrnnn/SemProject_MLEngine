@@ -74,6 +74,8 @@ python -m venv .venv
 Open `notebooks/LogisticRegression_Base.ipynb` in Jupyter and choose **Run All** after adding the local Delhi CSV as described next.
 For the **current Delhi notebook**, first obtain the source CSV linked in [dataset sources](docs/dataset_sources.md), place it at `data/raw/delhi/delhi_lost_and_found.csv`, and check the documented SHA-256. Then run `python -m scripts.create_delhi_experiment` and choose **Run All**. The notebook shows real missingness, duplicates, date and whitespace checks, four aggregate EDA figures, synthetic-claim generation, pair features, model fitting, grouped validation and limitations. Row-level generated Delhi files remain ignored by Git.
 
+To check the generated pair labels and split without downloading the Delhi data, run `python -m unittest tests.test_delhi_validator`. To validate local generated files after creating them, run `python -m scripts.validate_delhi_experiment`. This checks three candidates per synthetic claim (one constructed positive and two assumed negatives), unique found IDs, split separation and coverage, and pair counts in the split manifest. These checks catch structural generation and leakage mistakes; they cannot establish that distinct Delhi source rows represent different physical belongings or verify assumed labels.
+
 To regenerate the **older campus baseline** without Jupyter:
 
 ```powershell
