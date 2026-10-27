@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from .matcher import jaccard
 from .models import Report
 from .normalization import normalize_scalar, tokenize
 
@@ -17,6 +16,13 @@ FEATURE_NAMES = (
     "distinctive_feature_similarity",
     "location_similarity", "time_difference_hours",
 )
+
+
+def jaccard(left: set[str], right: set[str]) -> float:
+    """Share of unique words present in both descriptions."""
+    if not left or not right:
+        return 0.0
+    return len(left & right) / len(left | right)
 
 
 def _agreement(lost: Report, found: Report, field: str) -> tuple[int, int]:

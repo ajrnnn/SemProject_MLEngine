@@ -1,5 +1,4 @@
 {
-  "definition": "AI Application: Classification; Algorithm/Approach: Logistic Regression",
   "target_mapping": {
     "match": 1,
     "plausible": 0,
@@ -14,76 +13,6 @@
   },
   "grouped_cv": [
     {
-      "fold": 1,
-      "train_pairs": 19,
-      "validation_pairs": 5,
-      "validation_lost_ids": [
-        "lost-004",
-        "lost-011"
-      ],
-      "precision": 0.5,
-      "recall": 1.0,
-      "f1": 0.6666666666666666,
-      "confusion_matrix": [
-        [
-          1,
-          2
-        ],
-        [
-          0,
-          2
-        ]
-      ],
-      "roc_auc": 0.8333333333333334
-    },
-    {
-      "fold": 2,
-      "train_pairs": 19,
-      "validation_pairs": 5,
-      "validation_lost_ids": [
-        "lost-003",
-        "lost-010"
-      ],
-      "precision": 0.6666666666666666,
-      "recall": 1.0,
-      "f1": 0.8,
-      "confusion_matrix": [
-        [
-          2,
-          1
-        ],
-        [
-          0,
-          2
-        ]
-      ],
-      "roc_auc": 1.0
-    },
-    {
-      "fold": 3,
-      "train_pairs": 19,
-      "validation_pairs": 5,
-      "validation_lost_ids": [
-        "lost-002",
-        "lost-006"
-      ],
-      "precision": 1.0,
-      "recall": 0.5,
-      "f1": 0.6666666666666666,
-      "confusion_matrix": [
-        [
-          3,
-          0
-        ],
-        [
-          1,
-          1
-        ]
-      ],
-      "roc_auc": 1.0
-    },
-    {
-      "fold": 4,
       "train_pairs": 19,
       "validation_pairs": 5,
       "validation_lost_ids": [
@@ -103,10 +32,75 @@
           2
         ]
       ],
-      "roc_auc": 1.0
+      "fold": 1
     },
     {
-      "fold": 5,
+      "train_pairs": 19,
+      "validation_pairs": 5,
+      "validation_lost_ids": [
+        "lost-002",
+        "lost-006"
+      ],
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "confusion_matrix": [
+        [
+          3,
+          0
+        ],
+        [
+          1,
+          1
+        ]
+      ],
+      "fold": 2
+    },
+    {
+      "train_pairs": 19,
+      "validation_pairs": 5,
+      "validation_lost_ids": [
+        "lost-003",
+        "lost-010"
+      ],
+      "precision": 0.6666666666666666,
+      "recall": 1.0,
+      "f1": 0.8,
+      "confusion_matrix": [
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "fold": 3
+    },
+    {
+      "train_pairs": 19,
+      "validation_pairs": 5,
+      "validation_lost_ids": [
+        "lost-004",
+        "lost-011"
+      ],
+      "precision": 0.5,
+      "recall": 1.0,
+      "f1": 0.6666666666666666,
+      "confusion_matrix": [
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "fold": 4
+    },
+    {
       "train_pairs": 20,
       "validation_pairs": 4,
       "validation_lost_ids": [
@@ -126,7 +120,7 @@
           2
         ]
       ],
-      "roc_auc": 1.0
+      "fold": 5
     }
   ],
   "held_out_test": {
@@ -142,8 +136,7 @@
         1,
         3
       ]
-    ],
-    "roc_auc": 1.0
+    ]
   },
   "plausible_excluded_sensitivity": {
     "development_pairs": 18,
@@ -160,8 +153,7 @@
         0,
         4
       ]
-    ],
-    "roc_auc": 1.0
+    ]
   },
   "limitations": [
     "Small synthetic labelled sample",

@@ -1,59 +1,118 @@
-# Strathmore Lost and Found AI prototype
+# Strathmore Lost & Found AI
 
-## Project objective
+This is the **machine-learning part** of a proposed Strathmore University Lost & Found mobile application. Given one lost-item report and one found-item report, it estimates whether staff should review them as a possible match. It does **not** establish ownership or automatically return an item.
 
-Compare one lost-item report with one found-item report and suggest pairs worth human review. A score never establishes ownership; authorised Lost and Found staff must verify a claim before an item is released.
+- **AI Application:** Classification
+- **Algorithm/Approach:** Logistic Regression
+- **Current output:** a match probability and a binary `match` / `non-match` suggestion for each report pair. Several found reports can then be ordered by probability for staff review.
 
-## CAT 2 definition
+The [main learning notebook](notebooks/LogisticRegression_Base.ipynb) shows the whole process. Small helper modules keep cleaning and feature calculations consistent between the notebook and command-line run.
 
-**AI Application: Classification**
+## Dataset
 
-**Algorithm/Approach: Logistic Regression**
+We use two tracked **synthetic** campus files:
 
-The supervised model classifies a report pair as `1 = match` or `0 = non-match`. The CAT 2 workflow is **raw data -> exploration -> cleaning -> EDA -> pair features -> Logistic Regression -> grouped validation -> evaluation**. Start with [LogisticRegression_Base.ipynb](LogisticRegression_Base.ipynb). Its outputs are from the synthetic dataset, not real campus performance.
+| File | What it contains | Used for |
+|---|---|---|
+| [`synthetic_campus_reports.csv`](data/raw/campus/synthetic_campus_reports.csv) | 46 lost/found report examples | Exploration, cleaning, and pair features |
+| [`labelled_campus_pairs.csv`](data/raw/campus/labelled_campus_pairs.csv) | 32 labelled lost/found pairs: 14 `match`, 10 `non_match`, 8 `plausible` | Training and evaluation |
 
-## Existing baseline and datasets
+The raw reports contain six rows with a shifted column caused by an extra empty CSV field. Cleaning writes a corrected **copy** under `data/processed/`; the raw files stay unchanged. `plausible` means an unconfirmed possible match. The binary experiment maps it to class 0, but also checks results with those uncertain rows excluded.
 
-The manually weighted matcher in `matching_system/matcher.py` is retained as the **Rule-Based Baseline**. It is not trained ML and still powers the small prototype API. The Logistic Regression experiment is offline; the API and Android starter do not use it yet.
+An older Delhi Metro dataset was explored in this project's history. It has found items but no verified lost/found pairs and is **not used** to train or evaluate this model. No image dataset or image model is included. See [dataset sources](docs/dataset_sources.md) for provenance, limitations, and future image-data requirements.
 
-`matching_system_testing.ipynb` is a separate engineering notebook. `trial.ipynb` contains earlier exploration and historical outputs; use the CAT 2 notebook for current assessed results.
+## Repository map
 
-* `data/raw/campus/synthetic_campus_reports.csv`: 46 synthetic reports, including six malformed source rows repaired in a generated copy.
-* `data/raw/campus/labelled_campus_pairs.csv`: 32 designed pairs (14 `match`, 8 `plausible`, 10 `non_match`). The CAT classifier maps `plausible` to class 0 as a coursework assumption and reports an exclusion sensitivity check. Unlabelled pairs remain unknown.
-* Delhi Metro: 13,713 real-world *found-item* records for data-quality exploration. The raw CSV is excluded from this branch's new commits because descriptions may contain personal details. Obtain your own copy from the source and place it at `data/raw/delhi/delhimetrorail.csv` before running the full notebook; see `docs/DATASET.md`. It has no verified lost/found pairs and cannot measure matching accuracy.
-* Future images: no downloaded Roboflow images, own same-item photographs, image encoder, or measured CLIP result. See `docs/IMAGE_DATASET_GUIDE.md`.
-
-Raw campus inputs are kept unchanged. Keep the Delhi CSV local and do not commit or redistribute it without a privacy review. Generated data goes under `data/processed/`; measured model outputs go under `results/ml/`. Dataset provenance and limits are in `docs/DATASET.md`.
-
-## Run CAT 2
-
-From the repository root, with Python 3.11+:
-
-```powershell
-python -m pip install -r requirements.txt
-python -m scripts.run_cat2
-jupyter notebook LogisticRegression_Base.ipynb
+```text
+SemProject_MLEngine/
+├── README.md
+├── requirements.txt
+├── data/
+│   ├── raw/campus/              # original synthetic CSV files
+│   └── processed/               # cleaned reports, pair features, split
+├── notebooks/
+│   └── LogisticRegression_Base.ipynb
+├── matching_system/             # loading, text cleaning, features, model
+├── scripts/                     # short commands for each data/model step
+├── results/
+│   ├── figures/                 # four dataset charts
+│   └── ml/                      # predictions, coefficients, measured metrics
+├── tests/                       # focused checks of important behavior
+└── docs/dataset_sources.md
 ```
 
-The classifier command needs only the tracked campus files. For the full notebook, first download the Delhi Metro CSV as described in `docs/DATASET.md`, save it at `data/raw/delhi/delhimetrorail.csv`, and verify its SHA-256 hash. Run the notebook from first cell to last. `python -m scripts.run_cat2` regenerates the cleaned campus copy, `data/processed/modelling_pairs.csv`, grouped split, predictions, coefficients and `results/ml/validation_metrics.json`. On 22 October 2026, all 11 code cells completed without errors in a local Python environment with the declared dependencies. The four EDA figures rendered in the notebook and were saved under `results/figures/`. A fresh clone still needs the separately obtained Delhi CSV for a full rerun.
+The model code is in [`matching_system/ml_model.py`](matching_system/ml_model.py). [`feature_builder.py`](matching_system/feature_builder.py) turns a pair of reports into numeric inputs. Start with the notebook before reading the helper code.
 
-To check the original rule-based baseline and available tests:
+## Install and run
+
+Use Python 3.11 or newer. From the repository root:
 
 ```powershell
-python run_evaluation.py
-python -m unittest discover -s tests -p "test_*.py"
-python -m pytest -q
-uvicorn matching_system.api:app --reload
+git clone https://github.com/nimrod-kobia/SemProject_MLEngine.git
+cd SemProject_MLEngine
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe -m notebook
 ```
 
-`pytest` is needed for the three function-style tests in `tests/test_matching.py`. The FastAPI endpoints use a static synthetic inventory; `POST /reports` does not save reports. Never expose this prototype publicly with sensitive reports. The `android/` folder is an app scaffold with no sign-in, reporting flow or API integration.
+Open `notebooks/LogisticRegression_Base.ipynb` in Jupyter and choose **Run All**. The notebook needs only the two tracked campus CSVs. It shows raw data, correction of six rows, four observations and charts, pair features, training, validation, predictions, and limitations. It saves charts and measured results under `results/`.
 
-## Current status and limitations
+To regenerate the table, split, and model results without Jupyter:
 
-**Implemented:** raw-data preparation, pair features, offline Logistic Regression training and grouped validation, synthetic test evaluation, rule-based matcher and prototype API.
+```powershell
+.\.venv\Scripts\python.exe -m scripts.run_model
+```
 
-**Partially implemented:** labels have not had independent review; the four EDA figures are verified for the local dataset but depend on the separately obtained Delhi CSV for reproduction.
+On macOS/Linux, activate `.venv` with `source .venv/bin/activate` and use `python` in place of the Windows executable path.
 
-**Planned:** real-campus evaluation, image pairs and CLIP features, model comparison, durable backend and Android integration.
+## How the model works
 
-The held-out check has eight synthetic pairs from four lost reports. Such a small, designed sample cannot support a production accuracy claim. See `docs/CAT2_WORKFLOW.md`, `docs/MODEL_EXPLANATION.md`, and `docs/NEXT_STEPS.md` for the presentation guide and next work.
+```text
+Raw campus reports + labelled pairs
+    → correct shifted CSV rows
+    → compare each lost/found pair using 14 numeric features
+    → split by lost-report ID
+    → fit StandardScaler + Logistic Regression on development pairs
+    → grouped cross-validation and held-out test
+    → probabilities, predictions, and error analysis
+```
+
+The features compare description words, distinctive details, locations, item attributes, and reported times. A missing attribute produces neither a match nor a conflict. The target `y` is 1 for labelled `match` and 0 for the other two labels; `X` is the feature table. The training cell shows `model.fit(X_train, y_train)` directly.
+
+All candidate pairs belonging to one lost report remain in the same split. This keeps the same lost description from appearing in both training and testing. Scaling is learned inside each training fold before that fold's validation pairs are checked.
+
+## Measured results and example
+
+The held-out check has **8 synthetic pairs**, including four labelled matches. The saved run gives precision **1.00**, recall **0.75**, and F1 **0.857**. Its confusion matrix is `[[4, 0], [1, 3]]` (rows: actual 0/1; columns: predicted 0/1): four true negatives, three true positives, one false negative, and no false positives. These numbers are calculated in the notebook and stored in [`validation_metrics.json`](results/ml/validation_metrics.json). They are **not** a real-campus accuracy estimate.
+
+For example, the held-out pair `lost-008` / `found-019` describes a red spiral economics notebook in nearby rooms. The saved model assigns a match probability of about **0.911**, predicts `match`, and the synthetic label is `match`. The notebook also shows a missed labelled match and an ambiguous `plausible` case. Staff must inspect any suggested pair and verify ownership privately.
+
+## Limits and next work
+
+- Only 32 designed pairs exist, with 8 held out. The labels have not been independently reviewed.
+- Mapping `plausible` to 0 is an assumption; the notebook includes a check that excludes those rows.
+- There is no real campus field test and no validated photo matching. The trained classifier is offline; the Android app does not use it yet.
+- Next: review labels, gather consented campus examples, compare another simple model using the same grouped split and metrics, and integrate tested suggestions into the app with staff verification.
+
+## CAT 2 Assessment Guide
+
+CAT 2 is the **assessment**, not the name of the model or a software component. The brief asks for the following evidence:
+
+| Assessment requirement | Evidence in this repository | Status |
+|---|---|---|
+| **1. Identify the ML approach and relevant algorithms for the dataset and app output.** | This README's opening and workflow; notebook sections **1, 5–6** explain binary classification, Logistic Regression, inputs, and output. | Repository explanation complete. The required entry in the course's shared spreadsheet must be checked separately. |
+| **2. Detail data cleaning from exploration to the final modelling dataset and derive at least four EDA observations.** | Notebook sections **2–5** show raw rows, six shifted records, corrected copy, four calculated observations and charts, and the final pair-feature table. | Complete for the synthetic dataset. |
+| **3. Describe the base modelling approach and apply suitable validity measures.** | Notebook sections **5–7** show `X`, `y`, `model.fit`, grouping, cross-validation, held-out metrics, confusion matrix, and examples. | Complete as a small prototype; accuracy beyond this sample remains unverified. |
+| **4. Determine further validation methods.** | Notebook section **8** describes label review, real-campus testing, and a fair same-split model comparison. The brief says a description is sufficient at this stage. | Described; comparison is future work. |
+
+The required notebook filename is `LogisticRegression_Base.ipynb`, and the public submission repository is `SemProject_MLEngine`. The group must still check its spreadsheet entry, members' forks, assigned presentation date, and each member's ability to explain the work. Follow the course's rules on permitted AI assistance and authorship.
+
+### Presentation path
+
+1. Open this README and state the problem, dataset, model, and expected app output.
+2. Open the main notebook. Show the original rows and the six corrected rows.
+3. Explain the four calculated observations and charts.
+4. Show one row of pair features, identify `X` and `y`, and point to `model.fit`.
+5. Explain why the split and validation are grouped by lost report.
+6. Show the held-out confusion matrix, example predictions, and the missed match.
+7. State the limitations and how the team would validate further before app integration.

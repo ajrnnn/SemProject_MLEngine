@@ -1,4 +1,4 @@
-"""Generate the labelled, inspectable CAT 2 modelling table from raw sources."""
+"""Build the labelled feature table from campus reports and pair labels."""
 
 import csv
 from collections import Counter

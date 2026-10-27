@@ -12,7 +12,7 @@ from scripts.build_modelling_pairs import ROOT, build
 from scripts.split_campus_data import split
 
 
-class Cat2Tests(unittest.TestCase):
+class ModelTests(unittest.TestCase):
     def test_missing_attribute_is_not_a_conflict(self):
         build()
         reports = {row.report_id: row for row in load_reports(ROOT / "data/processed/synthetic_campus_reports.csv")}

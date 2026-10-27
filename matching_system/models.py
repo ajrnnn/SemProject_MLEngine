@@ -29,14 +29,3 @@ class LabelledPair:
     match_type: str
     notes: str
 
-
-@dataclass(frozen=True)
-class MatchCandidate:
-    found_report_id: str
-    score: float
-    shared_characteristics: tuple[str, ...]
-    conflicting_details: tuple[str, ...]
-    missing_information: tuple[str, ...]
-    explanation: str
-    requires_human_verification: bool = True
-
