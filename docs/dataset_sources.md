@@ -1,5 +1,15 @@
 # Dataset sources and boundaries
 
+## Current real-data source and constructed-label experiment
+
+The current notebook uses the [Delhi Metro Lost and Found dataset on Kaggle](https://www.kaggle.com/datasets/forgetabhi/delhi-metro-lost-and-found-dataset), published by `forgetabhi` and attributed there to Delhi Metro Rail Corporation. The local original is `data/raw/delhi/delhi_lost_and_found.csv`, SHA-256 `38a91688e2ff5acaf1261e8893d006f254cdfd9597d48bc8564a9573f1bf475a`. It has **13,713 real found-item rows**, with `item_name`, `description`, `item_quantity`, `station_name`, `receiving_date`, and `receiving_time`. It does not contain corresponding lost claims, returned-item confirmations, or photos. Confirm current source terms before redistributing the CSV.
+
+`scripts/prepare_delhi_data.py` preserves the raw file and all rows, counts exact duplicates (zero) and missing values (8,208 descriptions; 10,511 quantities), collapses whitespace in a generated copy, adds casefolded text, and parses dates and times. It writes `data/processed/cleaned_items.csv` and a non-sensitive audit at `data/processed/delhi_preprocessing_report.json`. `station_name` is the receiving station recorded by the source; we do not assert it is the exact loss location. No original colour, brand or model columns exist, so these are left absent.
+
+`scripts/create_delhi_experiment.py` uses seed 42. It selects 120 original found rows across ten frequent item names, creates one **fictional lost claim** per selected row, and makes 360 pair labels: 120 positives by construction, 120 assumed same-name negatives, and 120 assumed other-name negatives. Its generated files are `data/processed/synthetic_delhi_lost_claims.csv`, `data/processed/delhi_labelled_pairs.csv`, `data/processed/delhi_modelling_pairs.csv`, and `data/processed/delhi_split.json`. Dates and some locations in fictional claims are invented. Colour remains empty. A different found row is **not proof of a different physical item**, so the negative labels need real review before any field claim. The derived row-level files and model outputs are ignored by Git, just like the raw CSV, because found descriptions can contain personal details.
+
+The current notebook uses this **real found-item source plus synthetic claims and constructed labels**. Its held-out results test only this academic pairing exercise. The four `delhi_*.png` figures contain aggregate EDA counts. The older synthetic campus data and results below are retained as a separate baseline; they are not real reports.
+
 ## Data used by the current model
 
 | File | Origin and purpose | What we changed | Limits |
@@ -9,9 +19,9 @@
 
 The two synthetic source files are part of this project; no external dataset licence is asserted for them. They are separate from real reports, which would require consent and access controls. The notebook shows the raw files, cleaning, derived features, and measured results. Generated files under `data/processed/` and `results/` can be recreated from the two tracked CSVs.
 
-## Earlier external exploration, not model training
+## Earlier Delhi exploration and source caution
 
-An earlier version of this repository explored the [Delhi Metro Lost and Found dataset on Kaggle](https://www.kaggle.com/datasets/forgetabhi/delhi-metro-lost-and-found-dataset), published by `forgetabhi` and attributed there to Delhi Metro Rail Corporation. The older local copy had 13,713 **found-item** rows. It provides no verified lost/found pair labels, so it cannot train or evaluate this pair classifier. Its descriptions may include personal details. The old workbook, exploration notebook, and prepared Delhi files were removed from the current project tree; their Git history still exists. The earlier dataset note reported Apache 2.0 for the Kaggle listing, but check the current source terms before reusing the data. The current notebook does not require a Delhi download.
+An earlier version explored the same Delhi dataset but kept it separate from the classifier. The current notebook now uses it as a real found-item source for a **synthetic pairing experiment**; this does not add verified real lost/found labels. The old workbook and exploration files remain in Git history. The earlier dataset note reported Apache 2.0 for the Kaggle listing, but check the current source terms before reusing the data. A fresh clone requires a separate Delhi download.
 
 ## Images are future work
 

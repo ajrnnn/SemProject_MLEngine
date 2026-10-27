@@ -2,5 +2,12 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 .venv/
+.jupyter/
 .ipynb_checkpoints/
 data/raw/delhi/*.csv
+data/processed/cleaned_items.csv
+data/processed/synthetic_delhi_lost_claims.csv
+data/processed/delhi_labelled_pairs.csv
+data/processed/delhi_modelling_pairs.csv
+data/processed/delhi_split.json
+results/delhi_experiment/
