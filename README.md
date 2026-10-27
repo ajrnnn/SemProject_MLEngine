@@ -124,6 +124,8 @@ CAT 2 is the **assessment**, not the name of the model or a software component. 
 
 The required notebook filename is `LogisticRegression_Base.ipynb`, and the public submission repository is `SemProject_MLEngine`. The group must still check its spreadsheet entry, members' forks, assigned presentation date, and each member's ability to explain the work. Follow the course's rules on permitted AI assistance and authorship.
 
+Earlier work by team members is in the companion `AI-project` history. See [team work and Git history](docs/contributions.md) for verifiable commits and how fork pull requests will make future work visible in this submission repository.
+
 ### Presentation path
 
 1. Open this README and state the problem, dataset, model, and expected app output.
