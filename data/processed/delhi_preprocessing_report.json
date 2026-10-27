@@ -15,6 +15,16 @@
     "description": 77,
     "item_name": 161
   },
+  "station_name_audit": {
+    "non_empty_rows": 13713,
+    "distinct_source_values": 229,
+    "distinct_whitespace_normalized_values": 229,
+    "distinct_casefolded_values": 229,
+    "rows_changed_by_whitespace": 44,
+    "whitespace_collision_groups": 0,
+    "casefold_collision_groups": 0,
+    "semantic_alias_mapping_applied": false
+  },
   "normalization": "Whitespace collapsed; separate casefolded text columns; date DD/MM/YYYY and time HH:MM:SS parsed to ISO columns.",
   "excluded_records": []
 }

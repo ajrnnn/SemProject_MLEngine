@@ -18,7 +18,7 @@ Real Delhi found records (13,713; local raw CSV unchanged)
   → numeric pair features → Logistic Regression → grouped validation
 ```
 
-The found-item records are real. The lost claims and pair labels are **synthetic academic data**, not reports from Delhi passengers or Strathmore students. Different source rows are not necessarily different physical belongings, so the negatives are assumptions. This experiment cannot measure real lost-and-found matching accuracy. The Delhi raw CSV and all row-level derivatives are local and ignored by Git because descriptions may contain personal information. See [dataset sources](docs/dataset_sources.md) for the source and expected hash.
+The found-item records are real. The lost claims and pair labels are **synthetic academic data**, not reports from Delhi passengers or Strathmore students. Different source rows are not necessarily different physical belongings, so the negatives are assumptions. This experiment cannot measure real lost-and-found matching accuracy. The Delhi raw CSV and all row-level derivatives are local and ignored by Git because descriptions may contain personal information. Station cleaning is limited to whitespace and casefolded helper columns; no unverified station aliases are merged. See [dataset sources](docs/dataset_sources.md) for the source and expected hash.
 
 The earlier synthetic campus experiment remains in the repository as a small comparative teaching baseline. Its saved metrics, described below, are separate from the new Delhi exercise.
 

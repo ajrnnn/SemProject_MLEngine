@@ -10,9 +10,42 @@ from matching_system.feature_builder import FEATURE_NAMES, pair_features
 from matching_system.ml_model import run_experiment
 from scripts.build_modelling_pairs import ROOT, build
 from scripts.split_campus_data import split
+from scripts.prepare_delhi_data import prepare
 
 
 class ModelTests(unittest.TestCase):
+    def test_delhi_station_audit_only_collapses_whitespace(self):
+        with tempfile.TemporaryDirectory(dir=ROOT) as directory:
+            directory = Path(directory)
+            source = directory / "delhi.csv"
+            output = directory / "cleaned.csv"
+            report_path = directory / "report.json"
+            fields = ["item_name", "description", "item_quantity", "station_name",
+                      "receiving_date", "receiving_time"]
+            rows = [
+                ["Bag", "", "", " Central  ", "01/01/2024", "10:00:00"],
+                ["Bag", "", "", "Central", "02/01/2024", "10:00:00"],
+                ["Bag", "", "", "CENTRAL", "03/01/2024", "10:00:00"],
+            ]
+            with source.open("w", encoding="utf-8", newline="") as handle:
+                writer = csv.writer(handle)
+                writer.writerow(fields)
+                writer.writerows(rows)
+            report = prepare(source, output, report_path)
+
+        self.assertEqual(report["original_rows"], 3)
+        self.assertEqual(report["final_rows"], 3)
+        self.assertEqual(report["station_name_audit"], {
+            "non_empty_rows": 3,
+            "distinct_source_values": 3,
+            "distinct_whitespace_normalized_values": 2,
+            "distinct_casefolded_values": 1,
+            "rows_changed_by_whitespace": 1,
+            "whitespace_collision_groups": 1,
+            "casefold_collision_groups": 1,
+            "semantic_alias_mapping_applied": False,
+        })
+
     def test_missing_attribute_is_not_a_conflict(self):
         build()
         reports = {row.report_id: row for row in load_reports(ROOT / "data/processed/synthetic_campus_reports.csv")}
