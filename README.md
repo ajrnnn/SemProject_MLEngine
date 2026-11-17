@@ -49,7 +49,22 @@ The local API serves a synthetic found-item inventory from `data/fixtures/day3/d
 }
 ```
 
-The response includes each candidate's text similarity, facts, rule trace and next staff action. `GET /health` confirms synthetic-preview mode. Requests are not saved; private ID fields are rejected and validation errors do not echo rejected values. An empty result means no lexical candidate in this fixture inventory, not proof that the item does not exist. The [Day 3 pipeline](matching_system/pipeline.py) composes the ranker and both agents; the [demo notes](docs/day3_demo.md) record the inspected cases and limits.
+Each candidate includes a plain-language `explanation` alongside the structured facts, `rule_ids`, `reason_codes`, `rule_trace` and workflow action. A candidate excerpt looks like:
+
+```json
+{
+  "explanation": "Facts: category agrees; location differs; reported date agrees. Staff should review the conflicting details. Text similarity is lexical evidence, not a probability. Ownership is unverified; release is not authorized.",
+  "rule_ids": ["MA-R001", "MA-R005", "MA-R007", "MA-R010"],
+  "reason_codes": ["CATEGORY_AGREEMENT", "LOCATION_DIFFERENCE_NON_DISPOSITIVE", "EVENT_DATE_COMPATIBLE", "TEXT_SIMILARITY_RECORDED"],
+  "workflow": {
+    "action": "review_conflicts",
+    "ownership_approved": false,
+    "release_authorized": false
+  }
+}
+```
+
+The explanation uses only fixed fact labels and evidence states; it does not repeat report text or field values. It states the next staff action and clarifies that similarity is not a probability and that ownership/release are not determined. `GET /health` confirms synthetic-preview mode. Requests are not saved; private ID fields are rejected and validation errors do not echo rejected values. An empty result means no lexical candidate in this fixture inventory, not proof that the item does not exist. The [Day 3 pipeline](matching_system/pipeline.py) composes the ranker and both agents; the [demo notes](docs/day3_demo.md) record the inspected cases and limits.
 
 The modules can be composed without a server:
 
