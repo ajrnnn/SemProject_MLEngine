@@ -87,7 +87,7 @@ class Day3IntegrationTests(unittest.TestCase):
         self.assertIn("location differs", matches["f-conflict"]["explanation"])
         self.assertIn("review the conflicting details", matches["f-conflict"]["explanation"])
         self.assertIn("category is missing or unknown", matches["f-missing"]["explanation"])
-        self.assertIn("reported date is missing or unknown", matches["f-missing"]["explanation"])
+        self.assertIn("event date is missing or unknown", matches["f-missing"]["explanation"])
         self.assertIn("request or verify additional details", matches["f-missing"]["explanation"])
 
     def test_no_lexical_candidate_and_redacted_validation(self):

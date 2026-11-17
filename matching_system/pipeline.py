@@ -45,7 +45,7 @@ class MatchingPipeline:
 _FACT_LABELS = {
     "category_id": "category",
     "location_id": "location",
-    "event_date": "reported date",
+    "event_date": "event date",
 }
 
 

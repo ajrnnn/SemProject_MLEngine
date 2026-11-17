@@ -20,7 +20,7 @@ NLP retrieves candidates from item names and descriptions. The matching agent co
 | Data for development | 46 synthetic campus reports, 32 designed pairs and three additional synthetic queries. No verified real lost/found pairs are available here. |
 | Real-case evaluation | Pending permitted reports and independently reviewed same-item links. No campus matching accuracy is claimed. |
 
-The currently reviewed facts are limited to the fields on `TextReport`. Category disagreement is **review evidence**, not an automatic exclusion; different locations can still describe the same item. Missing facts are unknown. The rules are explicit constants with stable IDs; a separately managed knowledge-base file and end-to-end integration are future work.
+The currently reviewed facts are limited to the fields on `TextReport`. Category disagreement is **review evidence**, not an automatic exclusion; different locations can still describe the same item. Missing facts are unknown. The rules are explicit constants with stable IDs; a separately managed knowledge-base file remains future work. The local ranker-to-agents-to-API path is integrated.
 
 ## Run the prototype
 
@@ -53,7 +53,7 @@ Each candidate includes a plain-language `explanation` alongside the structured 
 
 ```json
 {
-  "explanation": "Facts: category agrees; location differs; reported date agrees. Staff should review the conflicting details. Text similarity is lexical evidence, not a probability. Ownership is unverified; release is not authorized.",
+  "explanation": "Facts: category agrees; location differs; event date agrees. Staff should review the conflicting details. Text similarity is lexical evidence, not a probability. Ownership is unverified; release is not authorized.",
   "rule_ids": ["MA-R001", "MA-R005", "MA-R007", "MA-R010"],
   "reason_codes": ["CATEGORY_AGREEMENT", "LOCATION_DIFFERENCE_NON_DISPOSITIVE", "EVENT_DATE_COMPATIBLE", "TEXT_SIMILARITY_RECORDED"],
   "workflow": {
@@ -83,6 +83,8 @@ if ranked:
 ```
 
 `load_text_reports_csv(path, columns=...)` maps future CSV columns explicitly into `TextReport`. It copies only selected general-item fields and rejects private ID-number fields in the mapping. The TF-IDF index is fitted on found-report text; call `replace_inventory(found_reports)` when the inventory changes. `rank(..., min_similarity=...)` can apply a lexical cutoff, but that value is not a calibrated match threshold. The [NLP handoff](docs/nlp_day1_handoff.md) defines the module boundary for integration.
+
+For the exact text preparation, TF-IDF settings, rebuild command and failure cases, see the [Day 4 NLP handoff](docs/day4_nlp_handoff.md).
 
 ## Data and evaluation
 
