@@ -1,8 +1,8 @@
 """Conservative rule-based evidence assessment for retrieved report pairs.
 
 Call ``assess_candidate(lost, found, text_similarity)`` with the retrieval
-score in the inclusive range [0, 1]. Category disagreement excludes a
-candidate; location and event-date differences remain non-dispositive.
+score in the inclusive range [0, 1]. Category and location disagreements
+are review evidence, not automatic exclusions.
 Similarity is returned as lexical evidence, not interpreted as a probability.
 
 Example serialized output::
@@ -34,6 +34,7 @@ Example serialized output::
 from __future__ import annotations
 
 import math
+from datetime import date
 from dataclasses import dataclass
 from enum import Enum
 
@@ -47,7 +48,6 @@ class FactStatus(str, Enum):
 
 
 class CandidateRecommendation(str, Enum):
-    EXCLUDE_CANDIDATE = "exclude_candidate"
     STAFF_REVIEW = "staff_review"
 
 
@@ -73,7 +73,7 @@ REASON_CATEGORY_UNKNOWN = "CATEGORY_UNKNOWN"
 REASON_LOCATION_AGREEMENT = "LOCATION_AGREEMENT"
 REASON_LOCATION_DIFFERENCE = "LOCATION_DIFFERENCE_NON_DISPOSITIVE"
 REASON_LOCATION_UNKNOWN = "LOCATION_UNKNOWN"
-REASON_EVENT_DATE_AGREEMENT = "EVENT_DATE_AGREEMENT"
+REASON_EVENT_DATE_AGREEMENT = "EVENT_DATE_COMPATIBLE"
 REASON_EVENT_DATE_DIFFERENCE = "EVENT_DATE_DIFFERENCE_NON_DISPOSITIVE"
 REASON_EVENT_DATE_UNKNOWN = "EVENT_DATE_UNKNOWN"
 REASON_TEXT_SIMILARITY_RECORDED = "TEXT_SIMILARITY_RECORDED"
@@ -168,17 +168,7 @@ def assess_candidate(
     rule_ids.append(rule_id)
     reason_codes.append(reason)
 
-    event_date, rule_id, reason = _compare(
-        FACT_EVENT_DATE,
-        lost.event_date,
-        found.event_date,
-        RULE_EVENT_DATE_AGREEMENT,
-        RULE_EVENT_DATE_DIFFERENCE,
-        RULE_EVENT_DATE_UNKNOWN,
-        REASON_EVENT_DATE_AGREEMENT,
-        REASON_EVENT_DATE_DIFFERENCE,
-        REASON_EVENT_DATE_UNKNOWN,
-    )
+    event_date, rule_id, reason = _compare_event_dates(lost.event_date, found.event_date)
     facts.append(event_date)
     rule_ids.append(rule_id)
     reason_codes.append(reason)
@@ -193,11 +183,7 @@ def assess_candidate(
     else:
         evidence_state = FactStatus.UNKNOWN
 
-    recommendation = (
-        CandidateRecommendation.EXCLUDE_CANDIDATE
-        if category.status is FactStatus.CONFLICT
-        else CandidateRecommendation.STAFF_REVIEW
-    )
+    recommendation = CandidateRecommendation.STAFF_REVIEW
     return MatchAssessment(
         lost_report_id=lost.report_id,
         found_report_id=found.report_id,
@@ -234,3 +220,21 @@ def _compare(
         rule_id,
         reason,
     )
+
+
+def _compare_event_dates(
+    lost_value: str | None, found_value: str | None
+) -> tuple[FactEvidence, str, str]:
+    """A find on or after the reported loss is chronologically compatible."""
+    try:
+        lost_date = date.fromisoformat(lost_value) if lost_value else None
+        found_date = date.fromisoformat(found_value) if found_value else None
+    except ValueError:
+        lost_date = found_date = None
+    if lost_date is None or found_date is None:
+        status, rule_id, reason = FactStatus.UNKNOWN, RULE_EVENT_DATE_UNKNOWN, REASON_EVENT_DATE_UNKNOWN
+    elif found_date < lost_date:
+        status, rule_id, reason = FactStatus.CONFLICT, RULE_EVENT_DATE_DIFFERENCE, REASON_EVENT_DATE_DIFFERENCE
+    else:
+        status, rule_id, reason = FactStatus.AGREEMENT, RULE_EVENT_DATE_AGREEMENT, REASON_EVENT_DATE_AGREEMENT
+    return FactEvidence(FACT_EVENT_DATE, status, lost_value, found_value, reason), rule_id, reason

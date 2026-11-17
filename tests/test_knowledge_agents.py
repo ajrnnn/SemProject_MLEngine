@@ -51,7 +51,7 @@ class MatchingAgentTests(unittest.TestCase):
             ["MA-R001", "MA-R004", "MA-R007", "MA-R010"],
         )
 
-    def test_category_conflict_excludes_candidate(self):
+    def test_category_conflict_requires_review(self):
         lost, found = self.make_reports(found={"category_id": "wallet"})
 
         result = assess_candidate(lost, found, 0.99)
@@ -59,9 +59,15 @@ class MatchingAgentTests(unittest.TestCase):
         self.assertEqual(result.evidence_state, FactStatus.CONFLICT)
         self.assertEqual(
             result.candidate_recommendation,
-            CandidateRecommendation.EXCLUDE_CANDIDATE,
+            CandidateRecommendation.STAFF_REVIEW,
         )
         self.assertIn("CATEGORY_CONFLICT", result.reason_codes)
+
+    def test_found_after_loss_is_compatible_and_earlier_find_is_flagged(self):
+        lost, later = self.make_reports(found={"event_date": "2026-11-17"})
+        self.assertEqual(assess_candidate(lost, later, 0.5).facts[2].status, FactStatus.AGREEMENT)
+        _, earlier = self.make_reports(found={"event_date": "2026-11-15"})
+        self.assertEqual(assess_candidate(lost, earlier, 0.5).facts[2].status, FactStatus.CONFLICT)
 
     def test_location_difference_alone_does_not_exclude_candidate(self):
         lost, found = self.make_reports(found={"location_id": "cafeteria"})
@@ -112,10 +118,24 @@ class StaffWorkflowAgentTests(unittest.TestCase):
         recommendation = recommend_staff_workflow(assessment)
         output = recommendation.to_dict()
 
-        self.assertEqual(recommendation.action, WorkflowAction.STAFF_REVIEW)
+        self.assertEqual(recommendation.action, WorkflowAction.REQUEST_DETAILS)
         self.assertFalse(output["ownership_approved"])
         self.assertFalse(output["release_authorized"])
-        self.assertIn("STAFF_REVIEW_REQUIRED", output["reason_codes"])
+        self.assertIn("MISSING_DETAILS_REQUIRE_REVIEW", output["reason_codes"])
+
+    def test_workflow_routes_conflicts_for_staff_inspection(self):
+        lost = TextReport("l1", "lost", "blue bottle", category_id="bottle")
+        found = TextReport("f1", "found", "blue bottle", category_id="wallet")
+        recommendation = recommend_staff_workflow(assess_candidate(lost, found, 0.8))
+        self.assertEqual(recommendation.action, WorkflowAction.REVIEW_CONFLICTS)
+        self.assertFalse(recommendation.release_authorized)
+
+    def test_workflow_routes_complete_agreement_for_staff_review(self):
+        lost = TextReport("l1", "lost", "blue bottle", category_id="bottle", location_id="library", event_date="2026-11-16")
+        found = TextReport("f1", "found", "blue bottle", category_id="bottle", location_id="library", event_date="2026-11-17")
+        recommendation = recommend_staff_workflow(assess_candidate(lost, found, 0.8))
+        self.assertEqual(recommendation.action, WorkflowAction.STAFF_REVIEW)
+        self.assertFalse(recommendation.ownership_approved)
 
 
 if __name__ == "__main__":

@@ -1,7 +1,7 @@
 # Day 1 data audit
 
 46 synthetic reports: 14 lost, 32 found. 32 designed pairs: 14 match,
-8 plausible, 10 non_match. Ledger contains 78 original examples; three
+8 plausible, 10 non_match. Ledger contains 46 report rows and 32 pair rows; three
 additional synthetic queries cover wording variation, similar items and no match.
 Raw files remain unchanged. No real-campus accuracy is claimed.
 
@@ -29,4 +29,5 @@ is not a validated location_id; reported_at is not verified event_date.
 Fit only on found inventory and rebuild on changes, per nlp_day1_handoff.md.
 Evaluate ranking separately; use reviewed physical-item groups for holdout.
 Synthetic fixtures cannot establish real-campus matching accuracy.
-`nChecks passed: ledger coverage 78; uncertain mapping 8; 46 unique report IDs; pair references resolve; three query rows; JSON parses; git diff --check; raw and matching_system diffs empty.
+
+Initial audit checks: ledger coverage 78 rows; uncertain mapping 8; 46 unique report IDs; pair references resolve; three query rows; JSON parses. These checks validate structure, not the truth of the designed labels.
