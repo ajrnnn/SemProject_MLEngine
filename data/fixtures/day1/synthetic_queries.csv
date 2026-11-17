@@ -1,0 +1,4 @@
+query_id,source,report_ids,proposed_physical_item_group,description,label,reviewer_status,intended_test
+syn-q01,authored synthetic,lost-001|found-001,proposed-lost-001,Missing black Adidas school bag with red zip and calculus notes inside.,match,synthetic_pending_review,wording variation retrieval
+syn-q02,authored synthetic,lost-001|found-002,unresolved,Seeking plain black backpack with bottle pocket.,uncertain,synthetic_pending_review,similar item ambiguity
+syn-q03,authored synthetic,,new-telescope,Missing violet telescope engraved SYNTHETIC-X999.,no_match_in_fixture,synthetic_pending_review,intentionally absent counterpart
