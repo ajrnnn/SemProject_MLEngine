@@ -55,30 +55,44 @@ class TfidfRanker:
     """Fit on found reports only and return lexical evidence for later agents."""
 
     def __init__(self, found_reports: list[TextReport]):
+        self.reports: list[TextReport] = []
+        self.vectorizer = TfidfVectorizer(ngram_range=(1, 2), strip_accents="unicode")
+        self.matrix = None
+        self.replace_inventory(found_reports)
+
+    def replace_inventory(self, found_reports: list[TextReport]) -> None:
+        """Refit the index after the found-report inventory changes."""
         if any(report.report_type != "found" for report in found_reports):
             raise ValueError("The inventory must contain found reports only")
         if len({report.report_id for report in found_reports}) != len(found_reports):
             raise ValueError("Found report IDs must be unique")
-        self.reports = list(found_reports)
-        self.vectorizer = TfidfVectorizer(ngram_range=(1, 2), strip_accents="unicode")
-        self.matrix = None
-        corpus = [self._text(report) for report in self.reports]
+        next_reports = list(found_reports)
+        next_vectorizer = TfidfVectorizer(ngram_range=(1, 2), strip_accents="unicode")
+        next_matrix = None
+        corpus = [self._text(report) for report in next_reports]
         if any(corpus):
             try:
-                self.matrix = self.vectorizer.fit_transform(corpus)
+                next_matrix = next_vectorizer.fit_transform(corpus)
             except ValueError as error:
                 if "empty vocabulary" not in str(error):
                     raise
+        self.reports = next_reports
+        self.vectorizer = next_vectorizer
+        self.matrix = next_matrix
 
     @staticmethod
     def _text(report: TextReport) -> str:
         return normalize_report_text(f"{report.item_name} {report.description}")
 
-    def rank(self, lost: TextReport, limit: int = 5) -> list[dict[str, str | float]]:
+    def rank(
+        self, lost: TextReport, limit: int = 5, min_similarity: float = 0.0
+    ) -> list[dict[str, str | float]]:
         if lost.report_type != "lost":
             raise ValueError("Ranking requires a lost report")
-        if limit < 1:
-            raise ValueError("limit must be positive")
+        if not 1 <= limit <= 5:
+            raise ValueError("limit must be between one and five")
+        if not 0.0 <= min_similarity <= 1.0:
+            raise ValueError("min_similarity must be between zero and one")
         if self.matrix is None or not self._text(lost):
             return []
         vector = self.vectorizer.transform([self._text(lost)])
@@ -86,5 +100,5 @@ class TfidfRanker:
         return [
             {"found_report_id": report.report_id, "text_similarity": round(float(score), 6)}
             for report, score in sorted(zip(self.reports, similarities), key=lambda item: (-item[1], item[0].report_id))
-            if score > 0
+            if score > 0 and score >= min_similarity
         ][:limit]

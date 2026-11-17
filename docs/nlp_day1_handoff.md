@@ -14,6 +14,8 @@ Use `TextReport` for both lost queries and found inventory. `TfidfRanker(found_r
 
 Load the reviewed found-report inventory, construct a new `TfidfRanker`, and query it with lost reports. The vectorizer is fitted only on found-report text, so the index must be rebuilt when the inventory changes. Keep the source and label provenance, perform a grouped holdout by physical item, and evaluate ranking separately. A found-only dataset cannot establish matching accuracy.
 
+Day 2 adds `ranker.replace_inventory(found_reports)`, which refits the index and also accepts an empty inventory. A failed inventory validation leaves the previous index intact. `rank(lost, limit=5, min_similarity=0.0)` accepts up to five results; the optional cosine cutoff is **not calibrated** as a match threshold. An empty result means no text passed this lexical cutoff, not that no physical match exists. Keep the agent's structured evidence and staff review separate from this retrieval decision.
+
 ## Run
 
 From this repository root, with the project dependencies installed:

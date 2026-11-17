@@ -50,7 +50,7 @@ if ranked:
     print(assessment.to_dict(), workflow.to_dict())
 ```
 
-`load_text_reports_csv(path, columns=...)` maps future CSV columns explicitly into `TextReport`. It copies only selected general-item fields and rejects private ID-number fields in the mapping. The TF-IDF index is fitted on found-report text and must be rebuilt when the found inventory changes. The [NLP handoff](docs/nlp_day1_handoff.md) defines the module boundary for integration.
+`load_text_reports_csv(path, columns=...)` maps future CSV columns explicitly into `TextReport`. It copies only selected general-item fields and rejects private ID-number fields in the mapping. The TF-IDF index is fitted on found-report text; call `replace_inventory(found_reports)` when the inventory changes. `rank(..., min_similarity=...)` can apply a lexical cutoff, but that value is not a calibrated match threshold. The [NLP handoff](docs/nlp_day1_handoff.md) defines the module boundary for integration.
 
 ## Data and evaluation
 
