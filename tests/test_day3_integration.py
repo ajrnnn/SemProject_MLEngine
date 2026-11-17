@@ -34,6 +34,61 @@ class Day3IntegrationTests(unittest.TestCase):
         self.assertNotIn("Blue metal bottle with scratched lid", str(body))
         plastic = next(row for row in body["matches"] if row["found_report_id"] == "demo-found-plastic")
         self.assertIn("CATEGORY_CONFLICT", plastic["reason_codes"])
+        self.assertIn("category agrees", first["explanation"])
+        self.assertIn("location differs", first["explanation"])
+        self.assertIn("Staff should review", first["explanation"])
+        self.assertIn("rule_trace", first)
+        self.assertIn("rule_ids", first)
+
+    def test_candidate_explanations_cover_agreement_conflict_and_missing_details(self):
+        lost = TextReport(
+            "l1",
+            "lost",
+            "blue bottle",
+            category_id="bottle",
+            location_id="library",
+            event_date="2026-11-16",
+        )
+        pipeline = MatchingPipeline([
+            TextReport(
+                "f-agree",
+                "found",
+                "blue bottle",
+                category_id="bottle",
+                location_id="library",
+                event_date="2026-11-17",
+            ),
+            TextReport(
+                "f-conflict",
+                "found",
+                "blue bottle",
+                category_id="wallet",
+                location_id="cafeteria",
+                event_date="2026-11-15",
+            ),
+            TextReport(
+                "f-missing",
+                "found",
+                "blue bottle",
+                category_id=None,
+                location_id="library",
+                event_date=None,
+            ),
+        ])
+
+        matches = {
+            match["found_report_id"]: match
+            for match in pipeline.recommend(lost)["matches"]
+        }
+
+        self.assertIn("category agrees", matches["f-agree"]["explanation"])
+        self.assertIn("Staff should review this possible match", matches["f-agree"]["explanation"])
+        self.assertIn("category differs", matches["f-conflict"]["explanation"])
+        self.assertIn("location differs", matches["f-conflict"]["explanation"])
+        self.assertIn("review the conflicting details", matches["f-conflict"]["explanation"])
+        self.assertIn("category is missing or unknown", matches["f-missing"]["explanation"])
+        self.assertIn("reported date is missing or unknown", matches["f-missing"]["explanation"])
+        self.assertIn("request or verify additional details", matches["f-missing"]["explanation"])
 
     def test_no_lexical_candidate_and_redacted_validation(self):
         response = self.client.post("/preview/matches", json={
@@ -42,14 +97,41 @@ class Day3IntegrationTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["status"], "no_lexical_candidates")
         rejected = self.client.post("/preview/matches", json={
-            "item_name": "Bottle", "description": "Blue bottle", "id_number": "00012345",
+            "item_name": "Bottle",
+            "description": "Blue bottle",
+            "id_number": "00012345",
+            "email": "alice@example.com",
+            "student_id": "SYNTHETIC-CONTACT-999",
         })
         self.assertEqual(rejected.status_code, 422)
         self.assertNotIn("00012345", rejected.text)
+        self.assertNotIn("alice@example.com", rejected.text)
+        self.assertNotIn("SYNTHETIC-CONTACT-999", rejected.text)
         invalid_date = self.client.post("/preview/matches", json={
             "item_name": "Bottle", "description": "Blue bottle", "event_date": "2026-02-30",
+            "phone_number": "+15551234567",
         })
         self.assertEqual(invalid_date.status_code, 422)
+        self.assertNotIn("+15551234567", invalid_date.text)
+
+    def test_explanation_does_not_repeat_contact_or_private_identifiers(self):
+        response = self.client.post("/preview/matches", json={
+            "item_name": "Metal water bottle",
+            "description": "Blue bottle with scratched lid email alice@example.com "
+            "phone +15551234567 student_id SYNTHETIC-ID-1234",
+            "category_id": "metal_water_bottle",
+            "location_id": "msb",
+            "event_date": "2026-11-10",
+        })
+
+        self.assertEqual(response.status_code, 200)
+        explanation = response.json()["matches"][0]["explanation"]
+        for private_value in (
+            "alice@example.com",
+            "+15551234567",
+            "SYNTHETIC-ID-1234",
+        ):
+            self.assertNotIn(private_value, explanation)
 
     def test_inventory_refresh_changes_candidate_lookup(self):
         lost = TextReport("l1", "lost", "blue bottle")
