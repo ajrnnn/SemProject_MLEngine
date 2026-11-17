@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from datetime import date
 from pathlib import Path
 
@@ -20,6 +21,22 @@ pipeline = MatchingPipeline([report for report in _reports if report.report_type
 
 app = FastAPI(title="Lost & Found staff matching preview")
 
+_EMAIL_PATTERN = re.compile(r"\b[\w.!#$%&'*+/=?^`{|}~-]+@[\w-]+(?:\.[\w-]+)+\b")
+_PHONE_PATTERN = re.compile(r"(?<!\w)\+?(?:\d[\s().-]*){7,15}(?!\w)")
+_PRIVATE_ID_PATTERN = re.compile(
+    r"\b(?:student[_\s-]*id|national[_\s-]*id|id[_\s-]*number|passport(?:[_\s-]*(?:number|no))?)"
+    r"\s*(?::|#|=|-)?\s*(?=[a-z0-9-]{4,}\b)(?=[a-z0-9-]*\d)[a-z0-9-]{4,}\b",
+    re.IGNORECASE,
+)
+
+
+def _contains_obvious_private_data(value: str) -> bool:
+    without_dates = re.sub(r"\b\d{4}-\d{2}-\d{2}\b", " ", value)
+    return any(
+        pattern.search(without_dates)
+        for pattern in (_EMAIL_PATTERN, _PHONE_PATTERN, _PRIVATE_ID_PATTERN)
+    )
+
 
 class PreviewRequest(BaseModel):
     model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
@@ -35,6 +52,13 @@ class PreviewRequest(BaseModel):
     def valid_calendar_date(cls, value: str | None) -> str | None:
         if value is not None:
             date.fromisoformat(value)
+        return value
+
+    @field_validator("item_name", "description", "category_id", "location_id")
+    @classmethod
+    def reject_obvious_private_data(cls, value: str | None) -> str | None:
+        if value is not None and _contains_obvious_private_data(value):
+            raise ValueError("Text contains a disallowed private-data pattern")
         return value
 
 

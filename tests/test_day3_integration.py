@@ -114,24 +114,66 @@ class Day3IntegrationTests(unittest.TestCase):
         self.assertEqual(invalid_date.status_code, 422)
         self.assertNotIn("+15551234567", invalid_date.text)
 
-    def test_explanation_does_not_repeat_contact_or_private_identifiers(self):
+    def test_obvious_private_data_in_free_text_is_rejected_without_echo(self):
+        private_values = (
+            "alice.person@example.com",
+            "+1 (555) 123-4567",
+            "student_id SYNTHETIC-ID-1234",
+            "national ID: 12345678",
+        )
+        for value in private_values:
+            with self.subTest(value=value):
+                response = self.client.post("/preview/matches", json={
+                    "item_name": "Bottle",
+                    "description": f"Blue bottle {value}",
+                })
+                self.assertEqual(response.status_code, 422)
+                self.assertEqual(
+                    response.json(),
+                    {"detail": "Invalid general-item preview request"},
+                )
+                self.assertNotIn(value, response.text)
+
+    def test_calendar_date_in_description_is_not_treated_as_contact_data(self):
         response = self.client.post("/preview/matches", json={
             "item_name": "Metal water bottle",
-            "description": "Blue bottle with scratched lid email alice@example.com "
-            "phone +15551234567 student_id SYNTHETIC-ID-1234",
-            "category_id": "metal_water_bottle",
-            "location_id": "msb",
-            "event_date": "2026-11-10",
+            "description": "Blue bottle found on 2026-11-11",
         })
 
         self.assertEqual(response.status_code, 200)
-        explanation = response.json()["matches"][0]["explanation"]
-        for private_value in (
+
+    def test_explanation_does_not_repeat_contact_or_private_identifiers(self):
+        private_values = (
             "alice@example.com",
             "+15551234567",
             "SYNTHETIC-ID-1234",
+        )
+        lost = TextReport(
+            "l1",
+            "lost",
+            "Blue bottle with scratched lid " + " ".join(private_values),
+            item_name="Metal water bottle",
+            category_id="metal_water_bottle",
+            location_id="msb",
+            event_date="2026-11-10",
+        )
+        pipeline = MatchingPipeline([
+            TextReport(
+                "f1",
+                "found",
+                "Blue metal bottle with scratched lid",
+                item_name="Metal water bottle",
+                category_id="metal_water_bottle",
+                location_id="cafeteria",
+                event_date="2026-11-11",
+            )
+        ])
+        output = pipeline.recommend(lost)
+
+        for private_value in (
+            *private_values,
         ):
-            self.assertNotIn(private_value, explanation)
+            self.assertNotIn(private_value, str(output))
 
     def test_inventory_refresh_changes_candidate_lookup(self):
         lost = TextReport("l1", "lost", "blue bottle")

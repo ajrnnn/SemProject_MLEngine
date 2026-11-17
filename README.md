@@ -49,7 +49,7 @@ The local API serves a synthetic found-item inventory from `data/fixtures/day3/d
 }
 ```
 
-Each candidate includes a plain-language `explanation` alongside the structured facts, `rule_ids`, `reason_codes`, `rule_trace` and workflow action. A candidate excerpt looks like:
+Each candidate includes a plain-language `explanation` alongside the structured facts, `rule_ids`, `reason_codes`, `rule_trace` and workflow action. The preview rejects obvious email, phone-like number, and common labeled private-ID patterns in its text fields; this limited check is not a general PII detector and does not make arbitrary real reports safe to submit. A candidate excerpt looks like:
 
 ```json
 {
@@ -64,7 +64,7 @@ Each candidate includes a plain-language `explanation` alongside the structured 
 }
 ```
 
-The explanation uses only fixed fact labels and evidence states; it does not repeat report text or field values. It states the next staff action and clarifies that similarity is not a probability and that ownership/release are not determined. `GET /health` confirms synthetic-preview mode. Requests are not saved; private ID fields are rejected and validation errors do not echo rejected values. An empty result means no lexical candidate in this fixture inventory, not proof that the item does not exist. The [Day 3 pipeline](matching_system/pipeline.py) composes the ranker and both agents; the [demo notes](docs/day3_demo.md) record the inspected cases and limits.
+The explanation uses only fixed fact labels and evidence states; it does not repeat report text or field values. It states the next staff action and clarifies that similarity is not a probability and that ownership/release are not determined. `GET /health` confirms synthetic-preview mode. Requests are not saved; private ID fields are rejected and validation errors do not echo rejected values. Real intake still requires authorized access, human privacy review, and removal/minimization of personal information. An empty result means no lexical candidate in this fixture inventory, not proof that the item does not exist. The [Day 3 pipeline](matching_system/pipeline.py) composes the ranker and both agents; the [Friday knowledge-agent/API handoff](docs/friday_knowledge_agents_api_handoff.md) documents exact facts, rules, traces, API schemas and privacy limits. The [demo notes](docs/day3_demo.md) record inspected cases and limits.
 
 The modules can be composed without a server:
 
