@@ -48,4 +48,3 @@ def main():
     dest.write_text(json.dumps(out,indent=2),encoding='utf-8')
     print(json.dumps({k:out[k] for k in ['evidence','metrics','no_match','excluded_uncertain_pairs']},indent=2))
 if __name__ == '__main__': main()
-
