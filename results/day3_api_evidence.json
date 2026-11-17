@@ -1,0 +1,843 @@
+{
+  "evidence": "SYNTHETIC ONLY; designed labels, not verified real-world matches or campus accuracy",
+  "baseline_commit": "0f6338538f4bb42be20ea8103f629bfd3613c7f8",
+  "demo_fixture_sha256": "af8beafe7b3131d93e053a26349069e9dcf7ad12798190d829577a51a23afe9b",
+  "evaluation": {
+    "evidence": "SYNTHETIC ONLY; not campus accuracy",
+    "inventory_count": 32,
+    "report_count": 46,
+    "pair_count": 32,
+    "excluded_uncertain_pairs": 8,
+    "binary_metrics": "not calculated; uncertain excluded; design labels are not verified",
+    "metrics": {
+      "development": {
+        "query_count": 11,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.6515151515151515
+      },
+      "test": {
+        "query_count": 3,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.611111111111111
+      },
+      "all": {
+        "query_count": 14,
+        "recall_at_5": 1.0,
+        "mrr_at_5": 0.6428571428571429
+      }
+    },
+    "no_match": {
+      "query_count": 1,
+      "empty_result_count": 1,
+      "queries": [
+        {
+          "query_id": "syn-q03",
+          "returned_count": 0,
+          "ranking": []
+        }
+      ]
+    },
+    "queries": [
+      {
+        "query_id": "lost-001",
+        "group": "found-001",
+        "split": "development",
+        "relevant": [
+          "found-001"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-003",
+            "text_similarity": 0.385019
+          },
+          {
+            "found_report_id": "found-002",
+            "text_similarity": 0.353978
+          },
+          {
+            "found_report_id": "found-001",
+            "text_similarity": 0.222625
+          },
+          {
+            "found_report_id": "found-022",
+            "text_similarity": 0.215917
+          },
+          {
+            "found_report_id": "found-020",
+            "text_similarity": 0.196199
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.3333333333333333
+      },
+      {
+        "query_id": "lost-002",
+        "group": "found-004",
+        "split": "development",
+        "relevant": [
+          "found-004"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-006",
+            "text_similarity": 0.391206
+          },
+          {
+            "found_report_id": "found-004",
+            "text_similarity": 0.391178
+          },
+          {
+            "found_report_id": "found-005",
+            "text_similarity": 0.385152
+          },
+          {
+            "found_report_id": "found-010",
+            "text_similarity": 0.075063
+          },
+          {
+            "found_report_id": "found-021",
+            "text_similarity": 0.069051
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      {
+        "query_id": "lost-003",
+        "group": "found-007",
+        "split": "development",
+        "relevant": [
+          "found-007"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-008",
+            "text_similarity": 0.434155
+          },
+          {
+            "found_report_id": "found-009",
+            "text_similarity": 0.343939
+          },
+          {
+            "found_report_id": "found-007",
+            "text_similarity": 0.28363
+          },
+          {
+            "found_report_id": "found-017",
+            "text_similarity": 0.129219
+          },
+          {
+            "found_report_id": "found-018",
+            "text_similarity": 0.078657
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.3333333333333333
+      },
+      {
+        "query_id": "lost-004",
+        "group": "found-010",
+        "split": "test",
+        "relevant": [
+          "found-010"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-012",
+            "text_similarity": 0.597862
+          },
+          {
+            "found_report_id": "found-011",
+            "text_similarity": 0.592126
+          },
+          {
+            "found_report_id": "found-010",
+            "text_similarity": 0.398321
+          },
+          {
+            "found_report_id": "found-002",
+            "text_similarity": 0.199616
+          },
+          {
+            "found_report_id": "found-001",
+            "text_similarity": 0.105208
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.3333333333333333
+      },
+      {
+        "query_id": "lost-005",
+        "group": "found-013",
+        "split": "development",
+        "relevant": [
+          "found-013"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-013",
+            "text_similarity": 0.587952
+          },
+          {
+            "found_report_id": "found-014",
+            "text_similarity": 0.434066
+          },
+          {
+            "found_report_id": "found-017",
+            "text_similarity": 0.059435
+          },
+          {
+            "found_report_id": "found-021",
+            "text_similarity": 0.05796
+          },
+          {
+            "found_report_id": "found-001",
+            "text_similarity": 0.038661
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      {
+        "query_id": "lost-006",
+        "group": "found-015",
+        "split": "test",
+        "relevant": [
+          "found-015"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-015",
+            "text_similarity": 0.607505
+          },
+          {
+            "found_report_id": "found-016",
+            "text_similarity": 0.467544
+          },
+          {
+            "found_report_id": "found-007",
+            "text_similarity": 0.133966
+          },
+          {
+            "found_report_id": "found-032",
+            "text_similarity": 0.050529
+          },
+          {
+            "found_report_id": "found-009",
+            "text_similarity": 0.045365
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      {
+        "query_id": "lost-007",
+        "group": "found-017",
+        "split": "development",
+        "relevant": [
+          "found-017"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-017",
+            "text_similarity": 0.43164
+          },
+          {
+            "found_report_id": "found-018",
+            "text_similarity": 0.381741
+          },
+          {
+            "found_report_id": "found-031",
+            "text_similarity": 0.234563
+          },
+          {
+            "found_report_id": "found-007",
+            "text_similarity": 0.112885
+          },
+          {
+            "found_report_id": "found-009",
+            "text_similarity": 0.068155
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      {
+        "query_id": "lost-008",
+        "group": "found-019",
+        "split": "development",
+        "relevant": [
+          "found-019"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-019",
+            "text_similarity": 0.619424
+          },
+          {
+            "found_report_id": "found-020",
+            "text_similarity": 0.402008
+          },
+          {
+            "found_report_id": "found-004",
+            "text_similarity": 0.143198
+          },
+          {
+            "found_report_id": "found-001",
+            "text_similarity": 0.120831
+          },
+          {
+            "found_report_id": "found-002",
+            "text_similarity": 0.086882
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0
+      },
+      {
+        "query_id": "lost-009",
+        "group": "found-021",
+        "split": "development",
+        "relevant": [
+          "found-021"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-022",
+            "text_similarity": 0.607369
+          },
+          {
+            "found_report_id": "found-021",
+            "text_similarity": 0.482678
+          },
+          {
+            "found_report_id": "found-011",
+            "text_similarity": 0.100774
+          },
+          {
+            "found_report_id": "found-012",
+            "text_similarity": 0.098918
+          },
+          {
+            "found_report_id": "found-010",
+            "text_similarity": 0.098675
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      {
+        "query_id": "lost-010",
+        "group": "found-023",
+        "split": "development",
+        "relevant": [
+          "found-023"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-024",
+            "text_similarity": 0.640254
+          },
+          {
+            "found_report_id": "found-023",
+            "text_similarity": 0.333748
+          },
+          {
+            "found_report_id": "found-009",
+            "text_similarity": 0.025107
+          },
+          {
+            "found_report_id": "found-022",
+            "text_similarity": 0.022863
+          },
+          {
+            "found_report_id": "found-028",
+            "text_similarity": 0.022743
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      {
+        "query_id": "lost-011",
+        "group": "found-025",
+        "split": "test",
+        "relevant": [
+          "found-025"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-026",
+            "text_similarity": 0.701918
+          },
+          {
+            "found_report_id": "found-025",
+            "text_similarity": 0.560255
+          },
+          {
+            "found_report_id": "found-008",
+            "text_similarity": 0.073629
+          },
+          {
+            "found_report_id": "found-019",
+            "text_similarity": 0.060898
+          },
+          {
+            "found_report_id": "found-031",
+            "text_similarity": 0.060894
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      {
+        "query_id": "lost-012",
+        "group": "found-027",
+        "split": "development",
+        "relevant": [
+          "found-027"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-028",
+            "text_similarity": 0.665982
+          },
+          {
+            "found_report_id": "found-027",
+            "text_similarity": 0.597926
+          },
+          {
+            "found_report_id": "found-009",
+            "text_similarity": 0.026116
+          },
+          {
+            "found_report_id": "found-022",
+            "text_similarity": 0.023782
+          },
+          {
+            "found_report_id": "found-008",
+            "text_similarity": 0.020874
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      {
+        "query_id": "lost-013",
+        "group": "found-029",
+        "split": "development",
+        "relevant": [
+          "found-029"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-030",
+            "text_similarity": 0.569438
+          },
+          {
+            "found_report_id": "found-029",
+            "text_similarity": 0.510744
+          },
+          {
+            "found_report_id": "found-005",
+            "text_similarity": 0.160367
+          },
+          {
+            "found_report_id": "found-006",
+            "text_similarity": 0.158174
+          },
+          {
+            "found_report_id": "found-004",
+            "text_similarity": 0.065744
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 0.5
+      },
+      {
+        "query_id": "lost-014",
+        "group": "found-031",
+        "split": "development",
+        "relevant": [
+          "found-031"
+        ],
+        "ranking": [
+          {
+            "found_report_id": "found-031",
+            "text_similarity": 0.666991
+          },
+          {
+            "found_report_id": "found-032",
+            "text_similarity": 0.22098
+          },
+          {
+            "found_report_id": "found-020",
+            "text_similarity": 0.090527
+          },
+          {
+            "found_report_id": "found-008",
+            "text_similarity": 0.071334
+          },
+          {
+            "found_report_id": "found-019",
+            "text_similarity": 0.040757
+          }
+        ],
+        "recall_at_5": 1.0,
+        "reciprocal_rank": 1.0
+      }
+    ],
+    "source_sha256": {
+      "data/raw/campus/synthetic_campus_reports.csv": "bb5c321664838769a9a800cf69acc7e0c2047894a0bb36dd5f7d71439e2e4996",
+      "data/raw/campus/labelled_campus_pairs.csv": "e025ff08ce02905e0a75fb8adbf570d8a8db0fadde2056be0787a1b9ae34dda9"
+    }
+  },
+  "health": {
+    "status": "ok",
+    "mode": "synthetic_preview",
+    "persistence": false
+  },
+  "cases": [
+    {
+      "case": "authored suggestion and misleading candidate",
+      "request": {
+        "item_name": "Metal water bottle",
+        "description": "Blue bottle with a scratched lid",
+        "category_id": "metal_water_bottle",
+        "location_id": "msb",
+        "event_date": "2026-11-10"
+      },
+      "response": {
+        "mode": "synthetic_preview",
+        "status": "possible_matches",
+        "score_meaning": "TF-IDF cosine similarity, not match or ownership probability",
+        "matches": [
+          {
+            "lost_report_id": "preview-query",
+            "found_report_id": "demo-found-metal",
+            "text_similarity": 0.835001,
+            "evidence_state": "conflict",
+            "candidate_recommendation": "staff_review",
+            "facts": [
+              {
+                "fact_id": "category_id",
+                "status": "agreement",
+                "lost_value": "metal_water_bottle",
+                "found_value": "metal_water_bottle",
+                "reason_code": "CATEGORY_AGREEMENT"
+              },
+              {
+                "fact_id": "location_id",
+                "status": "conflict",
+                "lost_value": "msb",
+                "found_value": "cafeteria",
+                "reason_code": "LOCATION_DIFFERENCE_NON_DISPOSITIVE"
+              },
+              {
+                "fact_id": "event_date",
+                "status": "agreement",
+                "lost_value": "2026-11-10",
+                "found_value": "2026-11-11",
+                "reason_code": "EVENT_DATE_COMPATIBLE"
+              }
+            ],
+            "rule_ids": [
+              "MA-R001",
+              "MA-R005",
+              "MA-R007",
+              "MA-R010"
+            ],
+            "reason_codes": [
+              "CATEGORY_AGREEMENT",
+              "LOCATION_DIFFERENCE_NON_DISPOSITIVE",
+              "EVENT_DATE_COMPATIBLE",
+              "TEXT_SIMILARITY_RECORDED"
+            ],
+            "rule_trace": [
+              {
+                "rule_id": "MA-R001",
+                "fact_id": "category_id",
+                "reason_code": "CATEGORY_AGREEMENT",
+                "status": "agreement"
+              },
+              {
+                "rule_id": "MA-R005",
+                "fact_id": "location_id",
+                "reason_code": "LOCATION_DIFFERENCE_NON_DISPOSITIVE",
+                "status": "conflict"
+              },
+              {
+                "rule_id": "MA-R007",
+                "fact_id": "event_date",
+                "reason_code": "EVENT_DATE_COMPATIBLE",
+                "status": "agreement"
+              },
+              {
+                "rule_id": "MA-R010",
+                "fact_id": "text_similarity",
+                "reason_code": "TEXT_SIMILARITY_RECORDED",
+                "status": "recorded"
+              }
+            ],
+            "explanation": "Facts: category agrees; location differs; reported date agrees. Staff should review the conflicting details. Text similarity is lexical evidence, not a probability. Ownership is unverified; release is not authorized.",
+            "workflow": {
+              "lost_report_id": "preview-query",
+              "found_report_id": "demo-found-metal",
+              "action": "review_conflicts",
+              "ownership_approved": false,
+              "release_authorized": false,
+              "rule_ids": [
+                "WF-R002",
+                "WF-R004",
+                "WF-R005"
+              ],
+              "reason_codes": [
+                "CONFLICTS_REQUIRE_REVIEW",
+                "OWNERSHIP_NOT_AUTOMATED",
+                "RELEASE_NOT_AUTOMATED"
+              ],
+              "rule_trace": [
+                {
+                  "rule_id": "WF-R002",
+                  "reason_code": "CONFLICTS_REQUIRE_REVIEW",
+                  "fact_id": "location_id"
+                },
+                {
+                  "rule_id": "WF-R004",
+                  "reason_code": "OWNERSHIP_NOT_AUTOMATED",
+                  "fact_id": "ownership"
+                },
+                {
+                  "rule_id": "WF-R005",
+                  "reason_code": "RELEASE_NOT_AUTOMATED",
+                  "fact_id": "release"
+                }
+              ]
+            }
+          },
+          {
+            "lost_report_id": "preview-query",
+            "found_report_id": "demo-found-unknown",
+            "text_similarity": 0.699263,
+            "evidence_state": "agreement",
+            "candidate_recommendation": "staff_review",
+            "facts": [
+              {
+                "fact_id": "category_id",
+                "status": "unknown",
+                "lost_value": "metal_water_bottle",
+                "found_value": null,
+                "reason_code": "CATEGORY_UNKNOWN"
+              },
+              {
+                "fact_id": "location_id",
+                "status": "agreement",
+                "lost_value": "msb",
+                "found_value": "msb",
+                "reason_code": "LOCATION_AGREEMENT"
+              },
+              {
+                "fact_id": "event_date",
+                "status": "unknown",
+                "lost_value": "2026-11-10",
+                "found_value": "",
+                "reason_code": "EVENT_DATE_UNKNOWN"
+              }
+            ],
+            "rule_ids": [
+              "MA-R003",
+              "MA-R004",
+              "MA-R009",
+              "MA-R010"
+            ],
+            "reason_codes": [
+              "CATEGORY_UNKNOWN",
+              "LOCATION_AGREEMENT",
+              "EVENT_DATE_UNKNOWN",
+              "TEXT_SIMILARITY_RECORDED"
+            ],
+            "rule_trace": [
+              {
+                "rule_id": "MA-R003",
+                "fact_id": "category_id",
+                "reason_code": "CATEGORY_UNKNOWN",
+                "status": "unknown"
+              },
+              {
+                "rule_id": "MA-R004",
+                "fact_id": "location_id",
+                "reason_code": "LOCATION_AGREEMENT",
+                "status": "agreement"
+              },
+              {
+                "rule_id": "MA-R009",
+                "fact_id": "event_date",
+                "reason_code": "EVENT_DATE_UNKNOWN",
+                "status": "unknown"
+              },
+              {
+                "rule_id": "MA-R010",
+                "fact_id": "text_similarity",
+                "reason_code": "TEXT_SIMILARITY_RECORDED",
+                "status": "recorded"
+              }
+            ],
+            "explanation": "Facts: category is missing or unknown; location agrees; reported date is missing or unknown. Staff should request or verify additional details. Text similarity is lexical evidence, not a probability. Ownership is unverified; release is not authorized.",
+            "workflow": {
+              "lost_report_id": "preview-query",
+              "found_report_id": "demo-found-unknown",
+              "action": "request_details",
+              "ownership_approved": false,
+              "release_authorized": false,
+              "rule_ids": [
+                "WF-R003",
+                "WF-R004",
+                "WF-R005"
+              ],
+              "reason_codes": [
+                "MISSING_DETAILS_REQUIRE_REVIEW",
+                "OWNERSHIP_NOT_AUTOMATED",
+                "RELEASE_NOT_AUTOMATED"
+              ],
+              "rule_trace": [
+                {
+                  "rule_id": "WF-R003",
+                  "reason_code": "MISSING_DETAILS_REQUIRE_REVIEW",
+                  "fact_id": "category_id"
+                },
+                {
+                  "rule_id": "WF-R004",
+                  "reason_code": "OWNERSHIP_NOT_AUTOMATED",
+                  "fact_id": "ownership"
+                },
+                {
+                  "rule_id": "WF-R005",
+                  "reason_code": "RELEASE_NOT_AUTOMATED",
+                  "fact_id": "release"
+                }
+              ]
+            }
+          },
+          {
+            "lost_report_id": "preview-query",
+            "found_report_id": "demo-found-plastic",
+            "text_similarity": 0.563049,
+            "evidence_state": "conflict",
+            "candidate_recommendation": "staff_review",
+            "facts": [
+              {
+                "fact_id": "category_id",
+                "status": "conflict",
+                "lost_value": "metal_water_bottle",
+                "found_value": "plastic_water_bottle",
+                "reason_code": "CATEGORY_CONFLICT"
+              },
+              {
+                "fact_id": "location_id",
+                "status": "agreement",
+                "lost_value": "msb",
+                "found_value": "msb",
+                "reason_code": "LOCATION_AGREEMENT"
+              },
+              {
+                "fact_id": "event_date",
+                "status": "agreement",
+                "lost_value": "2026-11-10",
+                "found_value": "2026-11-11",
+                "reason_code": "EVENT_DATE_COMPATIBLE"
+              }
+            ],
+            "rule_ids": [
+              "MA-R002",
+              "MA-R004",
+              "MA-R007",
+              "MA-R010"
+            ],
+            "reason_codes": [
+              "CATEGORY_CONFLICT",
+              "LOCATION_AGREEMENT",
+              "EVENT_DATE_COMPATIBLE",
+              "TEXT_SIMILARITY_RECORDED"
+            ],
+            "rule_trace": [
+              {
+                "rule_id": "MA-R002",
+                "fact_id": "category_id",
+                "reason_code": "CATEGORY_CONFLICT",
+                "status": "conflict"
+              },
+              {
+                "rule_id": "MA-R004",
+                "fact_id": "location_id",
+                "reason_code": "LOCATION_AGREEMENT",
+                "status": "agreement"
+              },
+              {
+                "rule_id": "MA-R007",
+                "fact_id": "event_date",
+                "reason_code": "EVENT_DATE_COMPATIBLE",
+                "status": "agreement"
+              },
+              {
+                "rule_id": "MA-R010",
+                "fact_id": "text_similarity",
+                "reason_code": "TEXT_SIMILARITY_RECORDED",
+                "status": "recorded"
+              }
+            ],
+            "explanation": "Facts: category differs; location agrees; reported date agrees. Staff should review the conflicting details. Text similarity is lexical evidence, not a probability. Ownership is unverified; release is not authorized.",
+            "workflow": {
+              "lost_report_id": "preview-query",
+              "found_report_id": "demo-found-plastic",
+              "action": "review_conflicts",
+              "ownership_approved": false,
+              "release_authorized": false,
+              "rule_ids": [
+                "WF-R002",
+                "WF-R004",
+                "WF-R005"
+              ],
+              "reason_codes": [
+                "CONFLICTS_REQUIRE_REVIEW",
+                "OWNERSHIP_NOT_AUTOMATED",
+                "RELEASE_NOT_AUTOMATED"
+              ],
+              "rule_trace": [
+                {
+                  "rule_id": "WF-R002",
+                  "reason_code": "CONFLICTS_REQUIRE_REVIEW",
+                  "fact_id": "category_id"
+                },
+                {
+                  "rule_id": "WF-R004",
+                  "reason_code": "OWNERSHIP_NOT_AUTOMATED",
+                  "fact_id": "ownership"
+                },
+                {
+                  "rule_id": "WF-R005",
+                  "reason_code": "RELEASE_NOT_AUTOMATED",
+                  "fact_id": "release"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "case": "empty lexical result",
+      "request": {
+        "item_name": "Telescope",
+        "description": "Violet telescope marked SYNTHETIC-X999"
+      },
+      "response": {
+        "mode": "synthetic_preview",
+        "status": "no_lexical_candidates",
+        "score_meaning": "TF-IDF cosine similarity, not match or ownership probability",
+        "matches": []
+      }
+    }
+  ],
+  "invalid_request_status": 422,
+  "android": "pending: no Android source/build configuration in this checkout"
+}
