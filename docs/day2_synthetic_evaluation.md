@@ -47,4 +47,5 @@ data and never enter the vectorizer. Rebuild via replace_inventory on inventory
 changes. Review physical-item groups before splitting real queries. Do not use
 reported_at as event_date or free-text location as validated location_id.
 No real data or verified pair labels have arrived in these templates.
-`nChecks: ranker unit suite, repeat-run output SHA256 equality, empty JSON intake contract, git diff --check, and unchanged raw/agent/ranker tree.
+
+Day 2 checks: ranker unit suite, repeat-run output SHA256 equality, empty JSON intake contract, git diff --check, and unchanged raw/agent/ranker tree.

@@ -16,23 +16,40 @@ NLP retrieves candidates from item names and descriptions. The matching agent co
 | Component | Current status |
 | --- | --- |
 | CSV field adapter, text normalization and TF-IDF ranking | Implemented in `matching_system/nlp_retrieval.py`; takes a replaceable found-report inventory. |
-| Matching and staff-workflow agents | Implemented as separately testable Python modules; not yet wired into an API or mobile app. |
+| Matching and staff-workflow agents | Implemented as separately testable Python modules and connected to a local synthetic API preview; not connected to a mobile app. |
 | Data for development | 46 synthetic campus reports, 32 designed pairs and three additional synthetic queries. No verified real lost/found pairs are available here. |
 | Real-case evaluation | Pending permitted reports and independently reviewed same-item links. No campus matching accuracy is claimed. |
 
 The currently reviewed facts are limited to the fields on `TextReport`. Category disagreement is **review evidence**, not an automatic exclusion; different locations can still describe the same item. Missing facts are unknown. The rules are explicit constants with stable IDs; a separately managed knowledge-base file and end-to-end integration are future work.
 
-## Run the Day 1 components
+## Run the prototype
 
 Use Python 3.11 or newer. From the repository root:
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe -m unittest tests.test_nlp_retrieval tests.test_knowledge_agents -v
+.\.venv\Scripts\python.exe -m unittest discover -s tests -p "test_*.py" -v
+.\.venv\Scripts\python.exe -m scripts.demo_day3
+.\.venv\Scripts\python.exe -m uvicorn matching_system.api:app --host 127.0.0.1 --port 8000
 ```
 
 On macOS or Linux, activate `.venv` and use `python` in place of the Windows executable. The retrieval component needs `scikit-learn`, already listed in `requirements.txt`.
+
+The local API serves a synthetic found-item inventory from `data/fixtures/day3/demo_reports.csv`. Open `http://127.0.0.1:8000/docs` and try `POST /preview/matches` with:
+
+```json
+{
+  "item_name": "Metal water bottle",
+  "description": "Blue bottle with a scratched lid",
+  "category_id": "metal_water_bottle",
+  "location_id": "msb",
+  "event_date": "2026-11-10",
+  "limit": 3
+}
+```
+
+The response includes each candidate's text similarity, facts, rule trace and next staff action. `GET /health` confirms synthetic-preview mode. Requests are not saved; private ID fields are rejected and validation errors do not echo rejected values. An empty result means no lexical candidate in this fixture inventory, not proof that the item does not exist. The [Day 3 pipeline](matching_system/pipeline.py) composes the ranker and both agents; the [demo notes](docs/day3_demo.md) record the inspected cases and limits.
 
 The modules can be composed without a server:
 
@@ -75,4 +92,4 @@ To reproduce the Delhi notebook, obtain the raw CSV as described in [dataset sou
 
 ## Next integration steps
 
-Connect the ranker and agents through a stable response contract, add a local API demo, review the fixture labels, and test the full path. Integrate with a mobile client only after the server contract and data handling are stable. Keep every output framed as a possible-match suggestion requiring staff verification. See [team contributions](docs/contributions.md) for the repository history.
+Review the fixture labels and demo errors, validate the intake contract with permitted real reports and verified pairs, and test the full path before a field pilot. Integrate with a mobile client only after server persistence, authentication and data handling are stable. Keep every output framed as a possible-match suggestion requiring staff verification. See [team contributions](docs/contributions.md) for the repository history.

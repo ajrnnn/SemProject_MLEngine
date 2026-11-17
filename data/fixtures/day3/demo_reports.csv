@@ -1,0 +1,6 @@
+report_id,report_type,item_name,description,category_id,location_id,event_date
+demo-lost-bottle,lost,Metal water bottle,Blue bottle with a scratched lid,metal_water_bottle,msb,2026-11-10
+demo-found-metal,found,Metal water bottle,Blue metal bottle with scratched lid,metal_water_bottle,cafeteria,2026-11-11
+demo-found-plastic,found,Plastic water bottle,Blue plastic bottle with scratched lid,plastic_water_bottle,msb,2026-11-11
+demo-found-unknown,found,Water bottle,Blue bottle with lid,,msb,
+demo-found-glasses,found,Spectacles,Black glasses with bent arm,spectacles,library,2026-11-11
